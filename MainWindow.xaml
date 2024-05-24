@@ -7,6 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Label Content="Обрати метод введення графа" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
 
+        <ComboBox x:Name="MethodOfGraphInput" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="200">
+            <ComboBoxItem Content="Матриця суміжності" />
+            <ComboBoxItem Content="Список суміжності" />
+        </ComboBox>
+
+        <Label Content="Обрати метод розфарбування графа" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" />
+
+        <ComboBox x:Name="MethodOfColorInput" HorizontalAlignment="Left" Margin="10, 90, 0, 0" VerticalAlignment="Top" Width = "400">
+            <ComboBoxItem Content="Жадібний алгоритм" />
+            <ComboBoxItem Content="Пошук з поверненням (MRV та степенева евристики)" />
+        </ComboBox>
+
+        <Label Content="Введіть граф" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" />
+
+        <TextBox x:Name="GraphInput" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="400" Height="200" TextWrapping="Wrap" />
+        
+        <CheckBox x:Name="ColorLimitCheckbox" Content="Розфарбувати за кількість кольорів" HorizontalAlignment="Right" Margin="10,70,0,0" VerticalAlignment="Top" />
+        
+        <Label Content="Ввести кількість кольорів" HorizontalAlignment="Right" Margin="10,10,0,0" VerticalAlignment="Top" />
+        
+        <TextBox x:Name="ColorInput" HorizontalAlignment="Right" Margin="10,40,0,0" VerticalAlignment="Top" Width="200" IsEnabled="False" />
+        
+        <Button x:Name="StartButton" Content="Почати" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Width="75" Click="StartButton_Click"/>
     </Grid>
 </Window>
