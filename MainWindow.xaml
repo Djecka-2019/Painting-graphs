@@ -23,7 +23,7 @@
 
         <Label Content="Введіть граф" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" />
 
-        <TextBox x:Name="GraphInput" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="400" Height="200" TextWrapping="Wrap" />
+        <TextBox x:Name="GraphInput" AcceptsReturn="True" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Width="400" Height="200" TextWrapping="Wrap" />
         
         <CheckBox x:Name="ColorLimitCheckbox" Content="Розфарбувати за кількість кольорів" HorizontalAlignment="Right" Margin="10,70,0,0" VerticalAlignment="Top" />
         
@@ -32,5 +32,12 @@
         <TextBox x:Name="ColorInput" HorizontalAlignment="Right" Margin="10,40,0,0" VerticalAlignment="Top" Width="200" IsEnabled="False" />
         
         <Button x:Name="StartButton" Content="Почати" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Width="75" Click="StartButton_Click"/>
+        
+        <Label Content="Введіть кількість вершин графу" HorizontalAlignment="Right" Margin="10,180,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="VertexInput" HorizontalAlignment="Right" Margin="10,210,0,0" VerticalAlignment="Top" Width="200" />
+        
+        <Label Content="Введіть кількість зв'язків графу" HorizontalAlignment="Right" Margin="10,240,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="EdgeInput" HorizontalAlignment="Right" Margin="10,270,0,0" VerticalAlignment="Top" Width="200" />
     </Grid>
 </Window>
+

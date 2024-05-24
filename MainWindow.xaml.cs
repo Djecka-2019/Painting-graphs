@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Painting_graphs.Graph;
 
 namespace Painting_graphs;
 
@@ -24,6 +23,7 @@ public partial class MainWindow : Window
         MethodOfColorInput.SelectionChanged += MethodOfGraphPaint_SelectionChanged;
         ColorLimitCheckbox.Checked += ColorLimitCheckbox_Checked;
         ColorLimitCheckbox.Unchecked += ColorLimitCheckbox_Unchecked;
+        
     }
     
     private void MethodOfGraphInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -50,29 +50,24 @@ public partial class MainWindow : Window
     
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
+        int size = int.Parse(VertexInput.Text);
         var graphInput = GraphInput.Text;
-        List<int> numbers = graphInput.Split(' ').Select(int.Parse).ToList();
+        List<List<int>> numbers = graphInput.Split('\n')
+            .Select(line => line.Split(' ')
+                .Select(int.Parse)
+                .ToList())
+            .ToList();
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
-            int size = numbers[0];
-            List<List<int>> graph = new List<List<int>>();
-            for (int i = 0; i < size; i++)
-            {
-                graph.Add(new List<int>());
-                for (int j = 0; j < size; j++)
-                {
-                    graph[i].Add(numbers[i * size + j + 1]);
-                }
-            }
             for(int i = 0 ; i < size ; i++)
             {
                 for(int j = 0 ; j < size ; j++)
                 {
-                    Console.Write(graph[i][j] + " ");
+                    Console.Write(numbers[i][j] + " ");
                 }
                 Console.WriteLine();
             }
-            Graph g = new Graph(graph, size);
+            Graph g = new Graph(numbers, size);
             if (MethodOfColorInput.SelectedIndex == 0)
             {
                 List<int> result = g.GreedyPaint();
@@ -92,14 +87,11 @@ public partial class MainWindow : Window
         }
         else
         {
-            int size = numbers[0];
-            numbers.RemoveAt(0);
-            int amountOfPairs = numbers[0];
-            numbers.RemoveAt(0);
+            int amountOfPairs = int.Parse(EdgeInput.Text);
             List<Tuple<int, int> > pairs = new List<Tuple<int, int>>();
             for (int i = 0; i < amountOfPairs; i++)
             {
-                pairs.Add(new Tuple<int, int>(numbers[i * 2], numbers[i * 2 + 1]));
+                pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
             Console.WriteLine(size);
             for (int i = 0; i < amountOfPairs; i++)
