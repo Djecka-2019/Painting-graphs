@@ -18,11 +18,7 @@ class Graph
             Adjacency[i] = new List<int>();
             for (int j = 0; j < Size; j++)
             {
-                if (matrix[i][j] == 1)
-                {
-                    Adjacency[i].Add(j);
-                    Adjacency[j].Add(i);
-                }
+                Adjacency[i].Add(matrix[i][j]);
             }
         }
     }
@@ -31,23 +27,27 @@ class Graph
     {
         this.Size = size;
         Adjacency = new List<List<int>>(new List<int>[Size]);
-        for (int i = 0; i < Size; i++)
-        {
-            Adjacency[i] = new List<int>();
-        }
         List<List<int>> matrix = new List<List<int>>(new List<int>[Size]);
         for (int i = 0; i < Size; i++)
         {
             matrix[i] = new List<int>(new int[Size]);
-        }
-        foreach (var pair in list)
-        {
-            if (pair.Item1 >= Size || pair.Item2 >= Size)
+            for (int j = 0; j < Size; j++)
             {
-                throw new ArgumentException("Invalid input");
+                matrix[i].Add(0);
             }
+        }
+        foreach (Tuple<int, int> pair in list)
+        {
             matrix[pair.Item1][pair.Item2] = 1;
             matrix[pair.Item2][pair.Item1] = 1;
+        }
+        for (int i = 0; i < Size; i++)
+        {
+            Adjacency[i] = new List<int>();
+            for (int j = 0; j < Size; j++)
+            {
+                Adjacency[i].Add(matrix[i][j]);
+            }
         }
     }
 
@@ -106,14 +106,18 @@ class Graph
 
     public List<int> GreedyPaint()
     {
-        List<int> result = new List<int>(new int[Size]);
+        int[] result = new int[Size];
         for (int i = 0; i < Size; i++)
         {
             result[i] = -1;
         }
         result[0] = 0;
 
-        List<bool> available = new List<bool>(new bool[Size]);
+        bool[] available = new bool[Size];
+        for (int cr = 0; cr < Size; cr++)
+        {
+            available[cr] = false;
+        }
 
         for (int u = 1; u < Size; u++)
         {
@@ -128,13 +132,13 @@ class Graph
             int cr;
             for (cr = 0; cr < Size; cr++)
             {
-                if (!available[cr])
+                if (available[cr] == false)
                 {
                     break;
                 }
             }
 
-            result[u] = cr;
+            result[u] = cr; 
 
             foreach (int i in Adjacency[u])
             {
@@ -144,7 +148,8 @@ class Graph
                 }
             }
         }
-        return result;
+
+        return result.ToList();
     }
 
     private int MinRemainingValues(List<int> color)
