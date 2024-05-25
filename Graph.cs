@@ -85,6 +85,10 @@ class Graph
     public int FindChromaticNumberOfGraph()
     {
         List<int> color = new List<int>(new int[Size]);
+        for(int i = 0 ; i < Size ; i++)
+        {
+            color[i] = 0;
+        }
         if (!GraphColoringUtil(color, 0))
         {
             return 0;
@@ -116,7 +120,7 @@ class Graph
         bool[] available = new bool[Size];
         for (int cr = 0; cr < Size; cr++)
         {
-            available[cr] = false;
+            available[cr] = true;
         }
 
         for (int u = 1; u < Size; u++)
@@ -125,27 +129,24 @@ class Graph
             {
                 if (result[i] != -1)
                 {
-                    available[result[i]] = true;
+                    available[result[i]] = false;
                 }
             }
 
             int cr;
             for (cr = 0; cr < Size; cr++)
             {
-                if (available[cr] == false)
+                if (available[cr])
                 {
                     break;
                 }
             }
 
-            result[u] = cr; 
+            result[u] = cr;
 
-            foreach (int i in Adjacency[u])
+            for (int i = 0 ; i < Size ; i++)
             {
-                if (result[i] != -1)
-                {
-                    available[result[i]] = false;
-                }
+                available[i] = true;
             }
         }
 

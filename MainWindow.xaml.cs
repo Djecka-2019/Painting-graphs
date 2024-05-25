@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Drawing.Drawing2D;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -68,20 +69,27 @@ public partial class MainWindow : Window
                 Console.WriteLine();
             }
             Graph g = new Graph(numbers, size);
-            if (MethodOfColorInput.SelectedIndex == 0)
+            if(ColorLimitCheckbox.IsChecked == true)
             {
-                List<int> result = g.GreedyPaint();
-                for (int i = 0; i < size; i++)
-                {
-                    Console.WriteLine(i + " : " + result[i]);
-                }
+                
             }
             else
             {
-                List<int> result = g.ColorGraphWithMRVAndHeuristic();
-                for (int i = 0; i < size; i++)
+                if (MethodOfColorInput.SelectedIndex == 0)
                 {
-                    Console.WriteLine(i + " : " + result[i]);
+                    List<int> result = g.GreedyPaint();
+                    for (int i = 0; i < size; i++)
+                    {
+                        Console.WriteLine(i + " : " + result[i]);
+                    }
+                }
+                else
+                {
+                    List<int> result = g.ColorGraphWithMRVAndHeuristic();
+                    for (int i = 0; i < size; i++)
+                    {
+                        Console.WriteLine(i + " : " + result[i]);
+                    }
                 }
             }
         }
@@ -99,20 +107,33 @@ public partial class MainWindow : Window
                 Console.WriteLine(pairs[i].Item1 + " " + pairs[i].Item2);
             }
             Graph g = new Graph(pairs, size);
-            if (MethodOfColorInput.SelectedIndex == 0)
+            if (ColorLimitCheckbox.IsChecked == true)
             {
-                List<int> result = g.GreedyPaint();
-                for (int i = 0; i < size; i++)
+                int colorLimit = int.Parse(ColorInput.Text);
+                if (colorLimit < g.FindChromaticNumberOfGraph())
                 {
-                    Console.WriteLine(i + " : " + result[i]);
+                    MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
+                    return;
                 }
+                Console.WriteLine(g.GreedyPaint());
             }
             else
             {
-                List<int> result = g.ColorGraphWithMRVAndHeuristic();
-                for (int i = 0; i < size; i++)
+                if (MethodOfColorInput.SelectedIndex == 0)
                 {
-                    Console.WriteLine(i + " : " + result[i]);
+                    List<int> result = g.GreedyPaint();
+                    for (int i = 0; i < size; i++)
+                    {
+                        Console.WriteLine(i + " : " + result[i]);
+                    }
+                }
+                else
+                {
+                    List<int> result = g.ColorGraphWithMRVAndHeuristic();
+                    for (int i = 0; i < size; i++)
+                    {
+                        Console.WriteLine(i + " : " + result[i]);
+                    }
                 }
             }
         }
