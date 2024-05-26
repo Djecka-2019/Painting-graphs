@@ -1,14 +1,5 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Drawing.Drawing2D;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Painting_graphs;
 
@@ -85,7 +76,7 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    List<int> result = g.ColorGraphWithMRVAndHeuristic();
+                    List<int> result = g.ColorGraphWithMrvAndHeuristic();
                     for (int i = 0; i < size; i++)
                     {
                         Console.WriteLine(i + " : " + result[i]);
@@ -129,7 +120,7 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    List<int> result = g.ColorGraphWithMRVAndHeuristic();
+                    List<int> result = g.ColorGraphWithMrvAndHeuristic();
                     for (int i = 0; i < size; i++)
                     {
                         Console.WriteLine(i + " : " + result[i]);

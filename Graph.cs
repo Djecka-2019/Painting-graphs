@@ -6,54 +6,47 @@ using System.Linq;
 
 class Graph
 {
-    private int Size;
-    private List<List<int>> Adjacency;
+    private int _size;
+    private List<List<int>> _adjacency;
 
     public Graph(List<List<int>> matrix, int size)
     {
-        this.Size = size;
-        Adjacency = new List<List<int>>(new List<int>[Size]);
-        for (int i = 0; i < Size; i++)
+        this._size = size;
+        _adjacency = new List<List<int>>(new List<int>[_size]);
+        for (int i = 0; i < _size; i++)
         {
-            Adjacency[i] = new List<int>();
-            for (int j = 0; j < Size; j++)
+            _adjacency[i] = new List<int>();
+        }
+        for (int i = 0; i < _size; i++)
+        {
+            foreach (int j in matrix[i])
             {
-                Adjacency[i].Add(matrix[i][j]);
+                if (matrix[i][j] == 1)
+                {
+                    _adjacency[i].Add(j);
+                }
             }
         }
     }
 
     public Graph(List<Tuple<int, int>> list, int size)
     {
-        this.Size = size;
-        Adjacency = new List<List<int>>(new List<int>[Size]);
-        List<List<int>> matrix = new List<List<int>>(new List<int>[Size]);
-        for (int i = 0; i < Size; i++)
+        this._size = size;
+        _adjacency = new List<List<int>>(new List<int>[_size]);
+        for (int i = 0; i < _size; i++)
         {
-            matrix[i] = new List<int>(new int[Size]);
-            for (int j = 0; j < Size; j++)
-            {
-                matrix[i].Add(0);
-            }
+            _adjacency[i] = new List<int>();
         }
-        foreach (Tuple<int, int> pair in list)
+        foreach (Tuple<int, int> tuple in list)
         {
-            matrix[pair.Item1][pair.Item2] = 1;
-            matrix[pair.Item2][pair.Item1] = 1;
-        }
-        for (int i = 0; i < Size; i++)
-        {
-            Adjacency[i] = new List<int>();
-            for (int j = 0; j < Size; j++)
-            {
-                Adjacency[i].Add(matrix[i][j]);
-            }
+            _adjacency[tuple.Item1].Add(tuple.Item2);
+            _adjacency[tuple.Item2].Add(tuple.Item1);
         }
     }
 
     private bool IsSafe(int v, List<int> color, int c)
     {
-        foreach (int i in Adjacency[v])
+        foreach (int i in _adjacency[v])
         {
             if (color[i] == c)
             {
@@ -65,10 +58,10 @@ class Graph
 
     private bool GraphColoringUtil(List<int> color, int v)
     {
-        if (v == Size)
+        if (v == _size)
             return true;
 
-        for (int c = 1; c <= Size; c++)
+        for (int c = 1; c <= _size; c++)
         {
             if (IsSafe(v, color, c))
             {
@@ -84,8 +77,8 @@ class Graph
 
     public int FindChromaticNumberOfGraph()
     {
-        List<int> color = new List<int>(new int[Size]);
-        for(int i = 0 ; i < Size ; i++)
+        List<int> color = new List<int>(new int[_size]);
+        for(int i = 0 ; i < _size ; i++)
         {
             color[i] = 0;
         }
@@ -97,35 +90,24 @@ class Graph
         return maxColor;
     }
 
-    public void PrintGraph()
-    {
-        for (int i = 0; i < Size; i++)
-        {
-            Console.Write(i + " : ");
-            foreach (int j in Adjacency[i])
-                Console.Write(j + " ");
-            Console.WriteLine();
-        }
-    }
-
     public List<int> GreedyPaint()
     {
-        int[] result = new int[Size];
-        for (int i = 0; i < Size; i++)
+        int[] result = new int[_size];
+        for (int i = 0; i < _size; i++)
         {
             result[i] = -1;
         }
         result[0] = 0;
 
-        bool[] available = new bool[Size];
-        for (int cr = 0; cr < Size; cr++)
+        bool[] available = new bool[_size];
+        for (int cr = 0; cr < _size; cr++)
         {
             available[cr] = true;
         }
 
-        for (int u = 1; u < Size; u++)
+        for (int u = 1; u < _size; u++)
         {
-            foreach (int i in Adjacency[u])
+            foreach (int i in _adjacency[u])
             {
                 if (result[i] != -1)
                 {
@@ -134,7 +116,7 @@ class Graph
             }
 
             int cr;
-            for (cr = 0; cr < Size; cr++)
+            for (cr = 0; cr < _size; cr++)
             {
                 if (available[cr])
                 {
@@ -144,7 +126,7 @@ class Graph
 
             result[u] = cr;
 
-            for (int i = 0 ; i < Size ; i++)
+            for (int i = 0 ; i < _size ; i++)
             {
                 available[i] = true;
             }
@@ -159,18 +141,18 @@ class Graph
         int index = -1;
         for (int i = 0; i < color.Count; i++)
         {
-            if (color[i] == 0 && Adjacency[i].Count < min)
+            if (color[i] == 0 && _adjacency[i].Count < min)
             {
-                min = Adjacency[i].Count;
+                min = _adjacency[i].Count;
                 index = i;
             }
         }
         return index;
     }
 
-    public List<int> ColorGraphWithMRVAndHeuristic()
+    public List<int> ColorGraphWithMrvAndHeuristic()
     {
-        List<int> color = new List<int>(new int[Size]);
+        List<int> color = new List<int>(new int[_size]);
 
         if (!GraphColoringUtil(color, MinRemainingValues(color)))
         {
