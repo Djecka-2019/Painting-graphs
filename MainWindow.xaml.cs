@@ -2,10 +2,6 @@
 using System.Windows.Controls;
 
 namespace Painting_graphs;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -62,7 +58,17 @@ public partial class MainWindow : Window
             Graph g = new Graph(numbers, size);
             if(ColorLimitCheckbox.IsChecked == true)
             {
-                
+                int colorLimit = int.Parse(ColorInput.Text);
+                if (colorLimit < g.FindChromaticNumberOfGraph())
+                {
+                    MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
+                    return;
+                }
+                List<int> result = g.GreedyPaint();
+                for(int i = 0 ; i < size ; i++)
+                {
+                    Console.WriteLine(i + " : " + result[i]);
+                }
             }
             else
             {
@@ -98,7 +104,7 @@ public partial class MainWindow : Window
                 Console.WriteLine(pairs[i].Item1 + " " + pairs[i].Item2);
             }
             Graph g = new Graph(pairs, size);
-            if (ColorLimitCheckbox.IsChecked == true)
+            if(ColorLimitCheckbox.IsChecked == true)
             {
                 int colorLimit = int.Parse(ColorInput.Text);
                 if (colorLimit < g.FindChromaticNumberOfGraph())
@@ -106,7 +112,11 @@ public partial class MainWindow : Window
                     MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
                     return;
                 }
-                Console.WriteLine(g.GreedyPaint());
+                List<int> result = g.GreedyPaint();
+                for(int i = 0 ; i < size ; i++)
+                {
+                    Console.WriteLine(i + " : " + result[i]);
+                }
             }
             else
             {

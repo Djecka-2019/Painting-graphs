@@ -3,11 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 class Graph
 {
-    private int _size;
-    private List<List<int>> _adjacency;
+    readonly int _size;
+    readonly List<List<int>> _adjacency;
 
     public Graph(List<List<int>> matrix, int size)
     {
@@ -17,6 +19,7 @@ class Graph
         {
             _adjacency[i] = new List<int>();
         }
+
         for (int i = 0; i < _size; i++)
         {
             foreach (int j in matrix[i])
@@ -37,6 +40,7 @@ class Graph
         {
             _adjacency[i] = new List<int>();
         }
+
         foreach (Tuple<int, int> tuple in list)
         {
             _adjacency[tuple.Item1].Add(tuple.Item2);
@@ -53,6 +57,7 @@ class Graph
                 return false;
             }
         }
+
         return true;
     }
 
@@ -78,14 +83,16 @@ class Graph
     public int FindChromaticNumberOfGraph()
     {
         List<int> color = new List<int>(new int[_size]);
-        for(int i = 0 ; i < _size ; i++)
+        for (int i = 0; i < _size; i++)
         {
             color[i] = 0;
         }
+
         if (!GraphColoringUtil(color, 0))
         {
             return 0;
         }
+
         int maxColor = color.Max();
         return maxColor;
     }
@@ -97,6 +104,7 @@ class Graph
         {
             result[i] = -1;
         }
+
         result[0] = 0;
 
         bool[] available = new bool[_size];
@@ -126,7 +134,7 @@ class Graph
 
             result[u] = cr;
 
-            for (int i = 0 ; i < _size ; i++)
+            for (int i = 0; i < _size; i++)
             {
                 available[i] = true;
             }
@@ -147,6 +155,7 @@ class Graph
                 index = i;
             }
         }
+
         return index;
     }
 
@@ -161,4 +170,6 @@ class Graph
 
         return color;
     }
+    
+    
 }
