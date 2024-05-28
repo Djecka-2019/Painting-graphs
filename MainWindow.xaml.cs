@@ -42,6 +42,42 @@ public partial class MainWindow : Window
             EdgeInput.IsEnabled = false;
         }
     }
+
+    private void colorBasedOnSelectedMethod(Graph g)
+    {
+        if (MethodOfColorInput.SelectedIndex == 0)
+        {
+            List<int> result = g.GreedyPaint();
+            GraphForm form = new GraphForm(g, result);
+            form.ShowDialog();
+        }
+        else
+        {
+            List<int> result = g.ColorGraphWithMrvAndHeuristic();
+            GraphForm form = new GraphForm(g, result);
+            form.ShowDialog();
+        }
+    }
+    
+    private void colorIfCheckboxChecked(Graph g)
+    {
+        if (ColorLimitCheckbox.IsChecked == true)
+        {
+            int colorLimit = int.Parse(ColorInput.Text);
+            if (colorLimit < g.FindChromaticNumberOfGraph())
+            {
+                MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
+                return;
+            }
+            List<int> result = g.GreedyPaint();
+            GraphForm form = new GraphForm(g, result);
+            form.ShowDialog();
+        }
+        else
+        {
+            colorBasedOnSelectedMethod(g);
+        }
+    }
     
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
@@ -55,33 +91,7 @@ public partial class MainWindow : Window
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
             Graph g = new Graph(numbers, size);
-            if(ColorLimitCheckbox.IsChecked == true)
-            {
-                int colorLimit = int.Parse(ColorInput.Text);
-                if (colorLimit < g.FindChromaticNumberOfGraph())
-                {
-                    MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
-                    return;
-                }
-                List<int> result = g.GreedyPaint();
-                GraphForm form = new GraphForm(g, result);
-                form.ShowDialog();
-            }
-            else
-            {
-                if (MethodOfColorInput.SelectedIndex == 0)
-                {
-                    List<int> result = g.GreedyPaint();
-                    GraphForm form = new GraphForm(g, result);
-                    form.ShowDialog();
-                }
-                else
-                {
-                    List<int> result = g.ColorGraphWithMrvAndHeuristic();
-                    GraphForm form = new GraphForm(g, result);
-                    form.ShowDialog();
-                }
-            }
+            colorIfCheckboxChecked(g);
         }
         else
         {
@@ -92,33 +102,7 @@ public partial class MainWindow : Window
                 pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
             Graph g = new Graph(pairs, size);
-            if(ColorLimitCheckbox.IsChecked == true)
-            {
-                int colorLimit = int.Parse(ColorInput.Text);
-                if (colorLimit < g.FindChromaticNumberOfGraph())
-                {
-                    MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
-                    return;
-                }
-                List<int> result = g.GreedyPaint();
-                GraphForm form = new GraphForm(g, result);
-                form.ShowDialog();
-            }
-            else
-            {
-                if (MethodOfColorInput.SelectedIndex == 0)
-                {
-                    List<int> result = g.GreedyPaint();
-                    GraphForm form = new GraphForm(g, result);
-                    form.ShowDialog();
-                }
-                else
-                {
-                    List<int> result = g.ColorGraphWithMrvAndHeuristic();
-                    GraphForm form = new GraphForm(g, result);
-                    form.ShowDialog();
-                }
-            }
+            colorIfCheckboxChecked(g);
         }
     }
 }

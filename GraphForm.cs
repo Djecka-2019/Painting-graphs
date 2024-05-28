@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using Microsoft.Msagl.GraphViewerGdi;
 using Microsoft.Msagl.Drawing;
-using Painting_graphs; // Assuming this is the namespace where your Graph class is located
+using Painting_graphs;
 using System.Collections.Generic;
 
 public class GraphForm : Form
@@ -15,7 +15,6 @@ public class GraphForm : Form
         for (int i = 0; i < n; i++)
         {
             double hue = (double)i / n;
-            // Convert HSL to RGB
             int rgb = HslToRgb(hue, 0.5, 0.5);
             rgbColors.Add(rgb);
         }
@@ -28,7 +27,7 @@ public class GraphForm : Form
 
         if (s == 0)
         {
-            r = g = b = l; // achromatic
+            r = g = b = l;
         }
         else
         {
@@ -60,7 +59,6 @@ public class GraphForm : Form
         List<int> Colors = GraphForm.GenerateHslColors(_graph.Size);
         var msaglGraph = new Microsoft.Msagl.Drawing.Graph("graph");
 
-        // Add nodes to the graph
         for (int i = 0; i < _graph.Size; i++)
         {
             var node = new Microsoft.Msagl.Drawing.Node(i.ToString());
@@ -71,10 +69,8 @@ public class GraphForm : Form
             msaglGraph.AddNode(node);
         }
 
-        // Create a HashSet to store the edges
         var edges = new HashSet<Tuple<int, int>>();
 
-        // Add edges to the graph
         for (int i = 0; i < _graph.Size; i++)
         {
             foreach (var adjacentNode in _graph.Adjacency[i])
@@ -96,13 +92,10 @@ public class GraphForm : Form
             }
         }
 
-        // Create a viewer object
         var viewer = new GViewer();
 
-        // Bind the graph to the viewer
         viewer.Graph = msaglGraph;
 
-        // Associate the viewer with the form
         this.SuspendLayout();
         viewer.Dock = DockStyle.Fill;
         this.Controls.Add(viewer);
