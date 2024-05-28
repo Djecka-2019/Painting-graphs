@@ -1,8 +1,5 @@
 ﻿using System.Windows.Forms;
 using Microsoft.Msagl.GraphViewerGdi;
-using Microsoft.Msagl.Drawing;
-using Painting_graphs;
-using System.Collections.Generic;
 
 public class GraphForm : Form
 {
