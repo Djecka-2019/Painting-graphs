@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 
 namespace Painting_graphs;
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     public MainWindow()
     {
@@ -16,31 +16,21 @@ public partial class MainWindow : Window
     
     private void MethodOfGraphPaint_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var comboBox = sender as ComboBox;
     }
     
     private void ColorLimitCheckbox_Checked(object sender, RoutedEventArgs e)
     {
-        var checkBox = sender as CheckBox;
         ColorInput.IsEnabled = true;
     }
     
     private void ColorLimitCheckbox_Unchecked(object sender, RoutedEventArgs e)
     {
-        var checkBox = sender as CheckBox;
         ColorInput.IsEnabled = false;
     }
     
     private void MethodOfGraphInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (MethodOfGraphInput.SelectedIndex == 1)
-        {
-            EdgeInput.IsEnabled = true;
-        }
-        else
-        {
-            EdgeInput.IsEnabled = false;
-        }
+        EdgeInput.IsEnabled = MethodOfGraphInput.SelectedIndex == 1;
     }
 
     private void colorBasedOnSelectedMethod(Graph g)
@@ -59,7 +49,7 @@ public partial class MainWindow : Window
         }
     }
     
-    private void colorIfCheckboxChecked(Graph g)
+    private void ColorIfCheckboxChecked(Graph g)
     {
         if (ColorLimitCheckbox.IsChecked == true)
         {
@@ -91,7 +81,7 @@ public partial class MainWindow : Window
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
             Graph g = new Graph(numbers, size);
-            colorIfCheckboxChecked(g);
+            ColorIfCheckboxChecked(g);
         }
         else
         {
@@ -102,7 +92,7 @@ public partial class MainWindow : Window
                 pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
             Graph g = new Graph(pairs, size);
-            colorIfCheckboxChecked(g);
+            ColorIfCheckboxChecked(g);
         }
     }
 }

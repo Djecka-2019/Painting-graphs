@@ -1,12 +1,13 @@
 ﻿using System.Windows.Forms;
 using Microsoft.Msagl.GraphViewerGdi;
+namespace Painting_graphs;
 
 public class GraphForm : Form
 {
-    private Painting_graphs.Graph _graph;
+    private Graph _graph;
     private List<int> _colors;
     
-    public static List<int> GenerateHslColors(int n)
+    private static List<int> GenerateHslColors(int n)
     {
         List<int> rgbColors = new List<int>();
         for (int i = 0; i < n; i++)
@@ -18,7 +19,7 @@ public class GraphForm : Form
         return rgbColors;
     }
     
-    public static int HslToRgb(double h, double s, double l)
+    private static int HslToRgb(double h, double s, double l)
     {
         double r, g, b;
 
@@ -28,7 +29,7 @@ public class GraphForm : Form
         }
         else
         {
-            Func<double, double, double, double> hue2rgb = (p, q, t) =>
+            double Hue2Rgb(double p, double q, double t)
             {
                 if (t < 0) t += 1;
                 if (t > 1) t -= 1;
@@ -36,24 +37,24 @@ public class GraphForm : Form
                 if (t < 1 / 2.0) return q;
                 if (t < 2 / 3.0) return p + (q - p) * (2 / 3.0 - t) * 6;
                 return p;
-            };
+            }
 
             var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
             var p = 2 * l - q;
-            r = hue2rgb(p, q, h + 1 / 3.0);
-            g = hue2rgb(p, q, h);
-            b = hue2rgb(p, q, h - 1 / 3.0);
+            r = Hue2Rgb(p, q, h + 1 / 3.0);
+            g = Hue2Rgb(p, q, h);
+            b = Hue2Rgb(p, q, h - 1 / 3.0);
         }
 
         return ((int)(r * 255) << 16) | ((int)(g * 255) << 8) | (int)(b * 255);
     }
     
-    public GraphForm(Painting_graphs.Graph graph, List<int> colors)
+    public GraphForm(Graph graph, List<int> colors)
     {
         _graph = graph;
         _colors = colors;
 
-        List<int> Colors = GraphForm.GenerateHslColors(_graph.Size);
+        List<int> Colors = GenerateHslColors(_graph.Size);
         var msaglGraph = new Microsoft.Msagl.Drawing.Graph("graph");
 
         for (int i = 0; i < _graph.Size; i++)
