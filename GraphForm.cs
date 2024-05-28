@@ -54,15 +54,15 @@ public class GraphForm : Form
         _graph = graph;
         _colors = colors;
 
-        List<int> Colors = GenerateHslColors(_graph.Size);
+        List<int> hslColors = GenerateHslColors(_graph.Size);
         var msaglGraph = new Microsoft.Msagl.Drawing.Graph("graph");
 
         for (int i = 0; i < _graph.Size; i++)
         {
             var node = new Microsoft.Msagl.Drawing.Node(i.ToString());
-            byte r = (byte)((Colors[colors[i]] >> 16) & 0xFF);
-            byte g = (byte)((Colors[colors[i]] >> 8) & 0xFF);
-            byte b = (byte)(Colors[colors[i]] & 0xFF);
+            byte r = (byte)((hslColors[colors[i]] >> 16) & 0xFF);
+            byte g = (byte)((hslColors[colors[i]] >> 8) & 0xFF);
+            byte b = (byte)(hslColors[colors[i]] & 0xFF);
             node.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(r, g, b);
             msaglGraph.AddNode(node);
         }
