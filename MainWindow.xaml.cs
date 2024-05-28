@@ -64,31 +64,22 @@ public partial class MainWindow : Window
                     return;
                 }
                 List<int> result = g.GreedyPaint();
-                for(int i = 0 ; i < size ; i++)
-                {
-                    Console.WriteLine(i + " : " + result[i]);
-                }
+                GraphForm form = new GraphForm(g, result);
+                form.ShowDialog();
             }
             else
             {
                 if (MethodOfColorInput.SelectedIndex == 0)
                 {
-                    g.PrintGraph();
                     List<int> result = g.GreedyPaint();
                     GraphForm form = new GraphForm(g, result);
                     form.ShowDialog();
-                    for (int i = 0; i < size; i++)
-                    {
-                        Console.WriteLine(i + " : " + result[i]);
-                    }
                 }
                 else
                 {
                     List<int> result = g.ColorGraphWithMrvAndHeuristic();
-                    for (int i = 0; i < size; i++)
-                    {
-                        Console.WriteLine(i + " : " + result[i]);
-                    }
+                    GraphForm form = new GraphForm(g, result);
+                    form.ShowDialog();
                 }
             }
         }
@@ -100,11 +91,6 @@ public partial class MainWindow : Window
             {
                 pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
-            Console.WriteLine(size);
-            for (int i = 0; i < amountOfPairs; i++)
-            {
-                Console.WriteLine(pairs[i].Item1 + " " + pairs[i].Item2);
-            }
             Graph g = new Graph(pairs, size);
             if(ColorLimitCheckbox.IsChecked == true)
             {
@@ -115,28 +101,22 @@ public partial class MainWindow : Window
                     return;
                 }
                 List<int> result = g.GreedyPaint();
-                for(int i = 0 ; i < size ; i++)
-                {
-                    Console.WriteLine(i + " : " + result[i]);
-                }
+                GraphForm form = new GraphForm(g, result);
+                form.ShowDialog();
             }
             else
             {
                 if (MethodOfColorInput.SelectedIndex == 0)
                 {
                     List<int> result = g.GreedyPaint();
-                    for (int i = 0; i < size; i++)
-                    {
-                        Console.WriteLine(i + " : " + result[i]);
-                    }
+                    GraphForm form = new GraphForm(g, result);
+                    form.ShowDialog();
                 }
                 else
                 {
                     List<int> result = g.ColorGraphWithMrvAndHeuristic();
-                    for (int i = 0; i < size; i++)
-                    {
-                        Console.WriteLine(i + " : " + result[i]);
-                    }
+                    GraphForm form = new GraphForm(g, result);
+                    form.ShowDialog();
                 }
             }
         }

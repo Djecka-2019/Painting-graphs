@@ -166,17 +166,4 @@ public class Graph
 
         return color;
     }
-
-    public void PrintGraph()
-    {
-        for (int i = 0; i < Size; i++)
-        {
-            Console.Write($"Node {i} is connected to: ");
-            foreach (var adjacentNode in _adjacency[i])
-            {
-                Console.Write($"{adjacentNode} ");
-            }
-            Console.WriteLine();
-        }
-    }
 }
