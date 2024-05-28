@@ -23,7 +23,10 @@ public class Graph
             for (int j = 0; j < Size; j++)
             {
                 if(matrix[i][j] == 1)
+                {
                     _adjacency[i].Add(j);
+                    _adjacency[j].Add(i);
+                }
             }
         }
     }
@@ -67,8 +70,11 @@ public class Graph
             if (IsSafe(v, color, c))
             {
                 color[v] = c;
-                if (GraphColoringUtil(color, v + 1))
+
+                int nextNode = MinRemainingValues(color);
+                if (nextNode == -1 || GraphColoringUtil(color, nextNode))
                     return true;
+
                 color[v] = 0;
             }
         }
@@ -145,10 +151,14 @@ public class Graph
         int index = -1;
         for (int i = 0; i < color.Count; i++)
         {
-            if (color[i] == 0 && _adjacency[i].Count < min)
+            if (color[i] == 0)
             {
-                min = _adjacency[i].Count;
-                index = i;
+                int count = _adjacency[i].Count(j => color[j] == 0);
+                if (count < min)
+                {
+                    min = count;
+                    index = i;
+                }
             }
         }
 
