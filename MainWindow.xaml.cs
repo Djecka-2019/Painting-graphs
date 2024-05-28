@@ -14,11 +14,6 @@ public partial class MainWindow : Window
         
     }
     
-    private void MethodOfGraphInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        var comboBox = sender as ComboBox;
-    }
-    
     private void MethodOfGraphPaint_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var comboBox = sender as ComboBox;
@@ -36,6 +31,18 @@ public partial class MainWindow : Window
         ColorInput.IsEnabled = false;
     }
     
+    private void MethodOfGraphInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (MethodOfGraphInput.SelectedIndex == 1)
+        {
+            EdgeInput.IsEnabled = true;
+        }
+        else
+        {
+            EdgeInput.IsEnabled = false;
+        }
+    }
+    
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
         int size = int.Parse(VertexInput.Text);
@@ -47,14 +54,6 @@ public partial class MainWindow : Window
             .ToList();
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
-            for(int i = 0 ; i < size ; i++)
-            {
-                for(int j = 0 ; j < size ; j++)
-                {
-                    Console.Write(numbers[i][j] + " ");
-                }
-                Console.WriteLine();
-            }
             Graph g = new Graph(numbers, size);
             if(ColorLimitCheckbox.IsChecked == true)
             {
@@ -74,7 +73,10 @@ public partial class MainWindow : Window
             {
                 if (MethodOfColorInput.SelectedIndex == 0)
                 {
+                    g.PrintGraph();
                     List<int> result = g.GreedyPaint();
+                    GraphForm form = new GraphForm(g, result);
+                    form.ShowDialog();
                     for (int i = 0; i < size; i++)
                     {
                         Console.WriteLine(i + " : " + result[i]);

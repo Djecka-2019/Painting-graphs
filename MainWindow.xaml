@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="Обрати метод введення графа" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
 
-        <ComboBox x:Name="MethodOfGraphInput" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="200">
+        <ComboBox x:Name="MethodOfGraphInput" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="200" SelectionChanged="MethodOfGraphInput_SelectionChanged">
             <ComboBoxItem Content="Матриця суміжності" />
             <ComboBoxItem Content="Список суміжності" />
         </ComboBox>
@@ -36,7 +36,7 @@
         <TextBox x:Name="VertexInput" HorizontalAlignment="Right" Margin="10,210,0,0" VerticalAlignment="Top" Width="200" />
         
         <Label Content="Введіть кількість зв'язків графу" HorizontalAlignment="Right" Margin="10,240,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="EdgeInput" HorizontalAlignment="Right" Margin="10,270,0,0" VerticalAlignment="Top" Width="200" />
+        <TextBox x:Name="EdgeInput" IsEnabled="False" HorizontalAlignment="Right" Margin="10,270,0,0" VerticalAlignment="Top" Width="200" />
     </Grid>
 </Window>
 

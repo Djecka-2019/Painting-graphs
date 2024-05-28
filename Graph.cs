@@ -3,40 +3,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
-class Graph
+public class Graph
 {
-    readonly int _size;
+    public int Size { get; set; }
     readonly List<List<int>> _adjacency;
-
+    public List<List<int>> Adjacency => _adjacency;
     public Graph(List<List<int>> matrix, int size)
     {
-        this._size = size;
-        _adjacency = new List<List<int>>(new List<int>[_size]);
-        for (int i = 0; i < _size; i++)
+        this.Size = size;
+        _adjacency = new List<List<int>>(new List<int>[Size]);
+        for (int i = 0; i < Size; i++)
         {
             _adjacency[i] = new List<int>();
         }
 
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < Size; i++)
         {
-            foreach (int j in matrix[i])
+            for (int j = 0; j < Size; j++)
             {
-                if (matrix[i][j] == 1)
-                {
+                if(matrix[i][j] == 1)
                     _adjacency[i].Add(j);
-                }
             }
         }
     }
 
     public Graph(List<Tuple<int, int>> list, int size)
     {
-        this._size = size;
-        _adjacency = new List<List<int>>(new List<int>[_size]);
-        for (int i = 0; i < _size; i++)
+        this.Size = size;
+        _adjacency = new List<List<int>>(new List<int>[Size]);
+        for (int i = 0; i < Size; i++)
         {
             _adjacency[i] = new List<int>();
         }
@@ -63,10 +59,10 @@ class Graph
 
     private bool GraphColoringUtil(List<int> color, int v)
     {
-        if (v == _size)
+        if (v == Size)
             return true;
 
-        for (int c = 1; c <= _size; c++)
+        for (int c = 1; c <= Size; c++)
         {
             if (IsSafe(v, color, c))
             {
@@ -82,8 +78,8 @@ class Graph
 
     public int FindChromaticNumberOfGraph()
     {
-        List<int> color = new List<int>(new int[_size]);
-        for (int i = 0; i < _size; i++)
+        List<int> color = new List<int>(new int[Size]);
+        for (int i = 0; i < Size; i++)
         {
             color[i] = 0;
         }
@@ -99,21 +95,21 @@ class Graph
 
     public List<int> GreedyPaint()
     {
-        int[] result = new int[_size];
-        for (int i = 0; i < _size; i++)
+        int[] result = new int[Size];
+        for (int i = 0; i < Size; i++)
         {
             result[i] = -1;
         }
 
         result[0] = 0;
 
-        bool[] available = new bool[_size];
-        for (int cr = 0; cr < _size; cr++)
+        bool[] available = new bool[Size];
+        for (int cr = 0; cr < Size; cr++)
         {
             available[cr] = true;
         }
 
-        for (int u = 1; u < _size; u++)
+        for (int u = 1; u < Size; u++)
         {
             foreach (int i in _adjacency[u])
             {
@@ -124,7 +120,7 @@ class Graph
             }
 
             int cr;
-            for (cr = 0; cr < _size; cr++)
+            for (cr = 0; cr < Size; cr++)
             {
                 if (available[cr])
                 {
@@ -134,7 +130,7 @@ class Graph
 
             result[u] = cr;
 
-            for (int i = 0; i < _size; i++)
+            for (int i = 0; i < Size; i++)
             {
                 available[i] = true;
             }
@@ -161,7 +157,7 @@ class Graph
 
     public List<int> ColorGraphWithMrvAndHeuristic()
     {
-        List<int> color = new List<int>(new int[_size]);
+        List<int> color = new List<int>(new int[Size]);
 
         if (!GraphColoringUtil(color, MinRemainingValues(color)))
         {
@@ -170,6 +166,17 @@ class Graph
 
         return color;
     }
-    
-    
+
+    public void PrintGraph()
+    {
+        for (int i = 0; i < Size; i++)
+        {
+            Console.Write($"Node {i} is connected to: ");
+            foreach (var adjacentNode in _adjacency[i])
+            {
+                Console.Write($"{adjacentNode} ");
+            }
+            Console.WriteLine();
+        }
+    }
 }
