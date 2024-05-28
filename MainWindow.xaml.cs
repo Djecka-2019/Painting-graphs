@@ -8,24 +8,7 @@ public partial class MainWindow
     {
         InitializeComponent();
         MethodOfGraphInput.SelectionChanged += MethodOfGraphInput_SelectionChanged;
-        MethodOfColorInput.SelectionChanged += MethodOfGraphPaint_SelectionChanged;
-        ColorLimitCheckbox.Checked += ColorLimitCheckbox_Checked;
-        ColorLimitCheckbox.Unchecked += ColorLimitCheckbox_Unchecked;
         
-    }
-    
-    private void MethodOfGraphPaint_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
-    
-    private void ColorLimitCheckbox_Checked(object sender, RoutedEventArgs e)
-    {
-        ColorInput.IsEnabled = true;
-    }
-    
-    private void ColorLimitCheckbox_Unchecked(object sender, RoutedEventArgs e)
-    {
-        ColorInput.IsEnabled = false;
     }
     
     private void MethodOfGraphInput_SelectionChanged(object sender, SelectionChangedEventArgs e)

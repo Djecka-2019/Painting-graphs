@@ -94,9 +94,9 @@ public class GraphForm : Form
 
         viewer.Graph = msaglGraph;
 
-        this.SuspendLayout();
+        SuspendLayout();
         viewer.Dock = DockStyle.Fill;
-        this.Controls.Add(viewer);
-        this.ResumeLayout();
+        Controls.Add(viewer);
+        ResumeLayout();
     }
 }
