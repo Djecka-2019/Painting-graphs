@@ -66,7 +66,7 @@ public partial class MainWindow : Window
             int colorLimit = int.Parse(ColorInput.Text);
             if (colorLimit < g.FindChromaticNumberOfGraph())
             {
-                MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (", + g.FindChromaticNumberOfGraph() + ")");
+                MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (" + g.FindChromaticNumberOfGraph() + ")");
                 return;
             }
             List<int> result = g.GreedyPaint();
