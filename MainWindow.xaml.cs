@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace Painting_graphs;
 public partial class MainWindow
@@ -90,11 +91,21 @@ public partial class MainWindow
             MessageBox.Show("Введіть граф");
             return;
         }
-        List<List<int>> numbers = graphInput.Split('\n')
-            .Select(line => line.Split(' ')
-                .Select(int.Parse)
-                .ToList())
-            .ToList();
+
+        List<List<int>> numbers = new List<List<int>>();
+        try
+        {
+                numbers = graphInput.Split('\n')
+                .Select(line => line.Split(' ')
+                    .Select(int.Parse)
+                    .ToList())
+                .ToList();
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show("Введіть коректний граф");
+            return;
+        }
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
             Graph g = new Graph(numbers, size);
