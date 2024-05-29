@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace Painting_graphs;
 public partial class MainWindow
@@ -48,7 +47,7 @@ public partial class MainWindow
     {
         if (ColorLimitCheckbox.IsChecked == true)
         {
-            if(!int.TryParse(ColorInput.Text, out int colorLimit))
+            if(!int.TryParse(ColorInput.Text, out int colorLimit) || colorLimit <= 0)
             {
                 MessageBox.Show("Введіть коректну кількість кольорів");
                 return;
@@ -58,9 +57,7 @@ public partial class MainWindow
                 MessageBox.Show("Введена кількість кольорів менша за хроматичне число графа (" + g.FindChromaticNumberOfGraph() + ")");
                 return;
             }
-            List<int> result = g.GreedyPaint();
-            GraphForm form = new GraphForm(g, result);
-            form.ShowDialog();
+            colorBasedOnSelectedMethod(g);
         }
         else
         {
