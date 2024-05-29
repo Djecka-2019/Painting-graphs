@@ -121,6 +121,11 @@ public partial class MainWindow
             List<Tuple<int, int> > pairs = new List<Tuple<int, int>>();
             for (int i = 0; i < amountOfPairs; i++)
             {
+                if(numbers[i][0] < 0 || numbers[i][0] >= size || numbers[i][1] < 0 || numbers[i][1] >= size)
+                {
+                    MessageBox.Show("Вершини повинні бути в межах графа");
+                    return;
+                }
                 pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
             Graph g = new Graph(pairs, size);
