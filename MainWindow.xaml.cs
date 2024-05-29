@@ -105,6 +105,16 @@ public partial class MainWindow
         }
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (!(numbers[i][j] == 0 || numbers[i][j] == 1))
+                    {
+                        MessageBox.Show("Матриця суміжності має містити лише 0 та 1");
+                    }
+                }
+            }
             Graph g = new Graph(numbers, size);
             ColorIfCheckboxChecked(g);
         }
