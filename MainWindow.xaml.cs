@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.IO;
 using System.Windows.Controls;
 
 namespace Painting_graphs;
@@ -26,21 +27,26 @@ public partial class MainWindow
     {
         EdgeInput.IsEnabled = MethodOfGraphInput.SelectedIndex == 1;
     }
+    
+    
 
     private void colorBasedOnSelectedMethod(Graph g)
     {
+        List<int> result;
         if (MethodOfColorInput.SelectedIndex == 0)
         {
-            List<int> result = g.GreedyPaint();
-            GraphForm form = new GraphForm(g, result);
-            form.ShowDialog();
+            result = g.GreedyPaint();
         }
         else
         {
-            List<int> result = g.ColorGraphWithMrvAndHeuristic();
-            GraphForm form = new GraphForm(g, result);
-            form.ShowDialog();
+            result = g.ColorGraphWithMrvAndHeuristic();
         }
+        string colorData = string.Join(Environment.NewLine, result);
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string filePath = Path.Combine(desktopPath, "colors.txt");
+        File.WriteAllText(filePath, colorData);
+        GraphForm form = new GraphForm(g, result);
+        form.ShowDialog();
     }
     
     private void ColorIfCheckboxChecked(Graph g)
