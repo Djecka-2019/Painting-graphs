@@ -118,6 +118,7 @@ public partial class MainWindow
                     if (!(numbers[i][j] == 0 || numbers[i][j] == 1))
                     {
                         MessageBox.Show("Матриця суміжності має містити лише 0 та 1");
+                        return;
                     }
                 }
             }
