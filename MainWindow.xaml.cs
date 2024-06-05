@@ -101,8 +101,7 @@ public partial class MainWindow
             MessageBox.Show("Введіть граф");
             return;
         }
-
-        List<List<int>> numbers = new List<List<int>>();
+        List<List<int>> numbers;
         try
         {
                 numbers = graphInput.Split('\n')
@@ -136,6 +135,7 @@ public partial class MainWindow
             catch(Exception exception)
             {
                 MessageBox.Show("Введіть коректний граф");
+                return;
             }
             try
             {
@@ -170,6 +170,7 @@ public partial class MainWindow
             catch (Exception exception)
             {
                 MessageBox.Show("Введіть коректний граф");
+                return;
             }
             try
             {
