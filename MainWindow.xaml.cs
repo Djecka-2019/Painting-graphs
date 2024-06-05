@@ -27,19 +27,26 @@ public partial class MainWindow
     {
         EdgeInput.IsEnabled = MethodOfGraphInput.SelectedIndex == 1;
     }
-    
-    
 
     private void colorBasedOnSelectedMethod(Graph g)
     {
-        List<int> result;
+        List<int> result = new List<int>();
         if (MethodOfColorInput.SelectedIndex == 0)
         {
             result = g.GreedyPaint();
         }
-        else
+        else if(MethodOfColorInput.SelectedIndex == 1)
         {
-            result = g.ColorGraphWithMrvAndHeuristic();
+            result = g.ColorGraphWithMrv();
+        }
+        else if(MethodOfColorInput.SelectedIndex == 2)
+        {
+            result = g.ColorGraphWithHeuristicDegree();
+        }
+        if(result.Count == 0)
+        {
+            MessageBox.Show("Граф неможливо розфарбувати обраним методом");
+            return;
         }
         string colorData = string.Join(Environment.NewLine, result);
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -111,19 +118,34 @@ public partial class MainWindow
         }
         if (MethodOfGraphInput.SelectedIndex == 0)
         {
-            for (int i = 0; i < size; i++)
+            try
             {
-                for (int j = 0; j < size; j++)
+                for (int i = 0; i < size; i++)
                 {
-                    if (!(numbers[i][j] == 0 || numbers[i][j] == 1))
+                    for (int j = 0; j < size; j++)
                     {
-                        MessageBox.Show("Матриця суміжності має містити лише 0 та 1");
-                        return;
+                        if (!(numbers[i][j] == 0 || numbers[i][j] == 1))
+                        {
+                            MessageBox.Show("Матриця суміжності має містити лише 0 та 1");
+                            return;
+                        }
                     }
                 }
+                
             }
-            Graph g = new Graph(numbers, size);
-            ColorIfCheckboxChecked(g);
+            catch(Exception exception)
+            {
+                MessageBox.Show("Введіть коректний граф");
+            }
+            try
+            {
+                Graph g = new Graph(numbers, size);
+                ColorIfCheckboxChecked(g);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Граф неможливо розфарбувати обраним методом");
+            }
         }
         else
         {
@@ -132,18 +154,32 @@ public partial class MainWindow
                 MessageBox.Show("Введіть коректну кількість пар вершин");
                 return;
             }
-            List<Tuple<int, int> > pairs = new List<Tuple<int, int>>();
-            for (int i = 0; i < amountOfPairs; i++)
+            List<Tuple<int, int>> pairs = new List<Tuple<int, int>>();
+            try
             {
-                if(numbers[i][0] < 0 || numbers[i][0] >= size || numbers[i][1] < 0 || numbers[i][1] >= size)
+                for (int i = 0; i < amountOfPairs; i++)
                 {
-                    MessageBox.Show("Вершини повинні бути в межах графа");
-                    return;
+                    if (numbers[i][0] < 0 || numbers[i][0] >= size || numbers[i][1] < 0 || numbers[i][1] >= size)
+                    {
+                        MessageBox.Show("Вершини повинні бути в межах графа");
+                        return;
+                    }
+                    pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
                 }
-                pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
             }
-            Graph g = new Graph(pairs, size);
-            ColorIfCheckboxChecked(g);
+            catch (Exception exception)
+            {
+                MessageBox.Show("Введіть коректний граф");
+            }
+            try
+            {
+                Graph g = new Graph(pairs, size);
+                ColorIfCheckboxChecked(g);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Граф неможливо розфарбувати обраним методом");
+            }
         }
     }
 }

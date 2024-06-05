@@ -33,7 +33,7 @@ public class Graph
 
     public Graph(List<Tuple<int, int>> list, int size)
     {
-        this.Size = size;
+        Size = size;
         _adjacency = new List<List<int>>(new List<int>[Size]);
         for (int i = 0; i < Size; i++)
         {
@@ -165,13 +165,42 @@ public class Graph
         return index;
     }
 
-    public List<int> ColorGraphWithMrvAndHeuristic()
+    public List<int> ColorGraphWithMrv()
     {
         List<int> color = new List<int>(new int[Size]);
+        for (int i = 0; i < Size; i++)
+        {
+            color[i] = 0;
+        }
 
-        if (!GraphColoringUtil(color, MinRemainingValues(color)))
+        if (!GraphColoringUtil(color, 0))
         {
             return new List<int>();
+        }
+
+        return color;
+    }
+
+    public List<int> ColorGraphWithHeuristicDegree()
+    {
+        List<int> color = new List<int>(new int[Size]);
+        for (int i = 0; i < Size; i++)
+        {
+            color[i] = 0;
+        }
+
+        List<int> nodesByDegree = Enumerable.Range(0, Size)
+            .OrderByDescending(i => _adjacency[i].Count)
+            .ToList();
+
+        foreach (int node in nodesByDegree)
+        {
+            int c = 1;
+            while (_adjacency[node].Any(adj => color[adj] == c))
+            {
+                c++;
+            }
+            color[node] = c;
         }
 
         return color;
