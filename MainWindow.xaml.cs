@@ -149,7 +149,7 @@ public partial class MainWindow
         }
         else
         {
-            if(!int.TryParse(EdgeInput.Text, out int amountOfPairs))
+            if(!int.TryParse(EdgeInput.Text, out int amountOfPairs) || amountOfPairs <= 0)
             {
                 MessageBox.Show("Введіть коректну кількість пар вершин");
                 return;
