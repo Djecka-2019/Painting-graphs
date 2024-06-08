@@ -4,8 +4,6 @@ namespace Painting_graphs;
 
 public class GraphForm : Form
 {
-    private Graph _graph;
-    private List<int> _colors;
     
     private static List<int> GenerateHslColors(int n)
     {
@@ -51,27 +49,27 @@ public class GraphForm : Form
     
     public GraphForm(Graph graph, List<int> colors)
     {
-        _graph = graph;
-        _colors = colors;
+        var localGraph = graph;
+        var localColors = colors;
 
-        List<int> hslColors = GenerateHslColors(_graph.Size);
+        List<int> hslColors = GenerateHslColors(localGraph.Size);
         var msaglGraph = new Microsoft.Msagl.Drawing.Graph("graph");
 
-        for (int i = 0; i < _graph.Size; i++)
+        for (int i = 0; i < localGraph.Size; i++)
         {
             var node = new Microsoft.Msagl.Drawing.Node(i.ToString());
-            byte r = (byte)((hslColors[colors[i]] >> 16) & 0xFF);
-            byte g = (byte)((hslColors[colors[i]] >> 8) & 0xFF);
-            byte b = (byte)(hslColors[colors[i]] & 0xFF);
+            byte r = (byte)((hslColors[localColors[i]] >> 16) & 0xFF);
+            byte g = (byte)((hslColors[localColors[i]] >> 8) & 0xFF);
+            byte b = (byte)(hslColors[localColors[i]] & 0xFF);
             node.Attr.FillColor = new Microsoft.Msagl.Drawing.Color(r, g, b);
             msaglGraph.AddNode(node);
         }
 
         var edges = new HashSet<Tuple<int, int>>();
 
-        for (int i = 0; i < _graph.Size; i++)
+        for (int i = 0; i < localGraph.Size; i++)
         {
-            foreach (var adjacentNode in _graph.Adjacency[i])
+            foreach (var adjacentNode in localGraph.Adjacency[i])
             {
                 var edge = new Tuple<int, int>(i, adjacentNode);
                 var edge1 = new Tuple<int, int>(adjacentNode, i);

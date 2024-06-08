@@ -6,12 +6,12 @@ using System.Linq;
 
 public class Graph
 {
-    public int Size { get; set; }
+    public int Size { get; }
     readonly List<List<int>> _adjacency;
     public List<List<int>> Adjacency => _adjacency;
     public Graph(List<List<int>> matrix, int size)
     {
-        this.Size = size;
+        Size = size;
         _adjacency = new List<List<int>>(new List<int>[Size]);
         for (int i = 0; i < Size; i++)
         {
@@ -84,10 +84,10 @@ public class Graph
 
     public int FindChromaticNumberOfGraph()
     {
-        List<int> color = new List<int>(new int[Size]);
+        List<int> color = new List<int>();
         for (int i = 0; i < Size; i++)
         {
-            color[i] = 0;
+            color.Add(0);
         }
 
         if (!GraphColoringUtil(color, 0))
@@ -167,10 +167,10 @@ public class Graph
 
     public List<int> ColorGraphWithMrv()
     {
-        List<int> color = new List<int>(new int[Size]);
+        List<int> color = new List<int>();
         for (int i = 0; i < Size; i++)
         {
-            color[i] = 0;
+            color.Add(0);
         }
 
         if (!GraphColoringUtil(color, 0))
@@ -183,10 +183,10 @@ public class Graph
 
     public List<int> ColorGraphWithHeuristicDegree()
     {
-        List<int> color = new List<int>(new int[Size]);
+        List<int> color = new List<int>();
         for (int i = 0; i < Size; i++)
         {
-            color[i] = 0;
+            color.Add(0);
         }
 
         List<int> nodesByDegree = Enumerable.Range(0, Size)

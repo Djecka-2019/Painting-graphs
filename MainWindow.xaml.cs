@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.IO;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Painting_graphs;
@@ -112,7 +111,7 @@ public partial class MainWindow
                     .ToList())
                 .ToList();
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             MessageBox.Show("Введіть коректний граф");
             return;
@@ -134,7 +133,7 @@ public partial class MainWindow
                 }
                 
             }
-            catch(Exception exception)
+            catch(Exception)
             {
                 MessageBox.Show("Введіть коректний граф");
                 return;
@@ -144,7 +143,7 @@ public partial class MainWindow
                 Graph g = new Graph(numbers, size);
                 ColorIfCheckboxChecked(g);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 MessageBox.Show("Граф неможливо розфарбувати обраним методом");
             }
@@ -169,7 +168,7 @@ public partial class MainWindow
                     pairs.Add(new Tuple<int, int>(numbers[i][0], numbers[i][1]));
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 MessageBox.Show("Введіть коректний граф");
                 return;
@@ -179,14 +178,14 @@ public partial class MainWindow
                 Graph g = new Graph(pairs, size);
                 ColorIfCheckboxChecked(g);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 MessageBox.Show("Граф неможливо розфарбувати обраним методом");
             }
         }
     }
 
-    public void GenerateRandomGraph_Click(object sender, RoutedEventArgs e)
+    private void GenerateRandomGraph_Click(object sender, RoutedEventArgs e)
     {
         if(MethodOfColorInput.SelectedIndex == -1)
         {
@@ -223,7 +222,7 @@ public partial class MainWindow
 
         try
         {
-            string Text = "";
+            string text = "";
             for (int i = 0; i < size; i++)
             {
                 string row = "";
@@ -235,15 +234,15 @@ public partial class MainWindow
                 }
                 if(i != size - 1)
                     row += "\n";
-                Text += row;
+                text += row;
             }
 
-            GraphInput.Text = Text;
+            GraphInput.Text = text;
             MethodOfGraphInput.SelectedIndex = 0;
             Graph g = new Graph(numbers, size);
             ColorIfCheckboxChecked(g);
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             MessageBox.Show("Згенерований граф неможливо розфарбувати обраним методом");
         }
