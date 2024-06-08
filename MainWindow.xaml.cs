@@ -221,19 +221,6 @@ public partial class MainWindow
             Console.WriteLine();
         }
 
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                if (numbers[i][j] == 1)
-                {
-                    numbers[j][i] = 1;
-                }
-                Console.Write(numbers[i][j]);
-            }
-            Console.WriteLine();
-        }
-
         try
         {
             string Text = "";
@@ -252,6 +239,7 @@ public partial class MainWindow
             }
 
             GraphInput.Text = Text;
+            MethodOfGraphInput.SelectedIndex = 0;
             Graph g = new Graph(numbers, size);
             ColorIfCheckboxChecked(g);
         }
