@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Painting_graphs;
 public partial class MainWindow
@@ -181,6 +183,81 @@ public partial class MainWindow
             {
                 MessageBox.Show("Граф неможливо розфарбувати обраним методом");
             }
+        }
+    }
+
+    public void GenerateRandomGraph_Click(object sender, RoutedEventArgs e)
+    {
+        if(MethodOfColorInput.SelectedIndex == -1)
+        {
+            MessageBox.Show("Виберіть метод розфарбування");
+            return;
+        }
+        if(!int.TryParse(VertexInput.Text, out int size))
+        {
+            MessageBox.Show("Введіть коректний розмір графа");
+            return;
+        }
+
+        List<List<int>> numbers = new List<List<int>>();
+        for (int i = 0; i < size; i++)
+        {
+            List<int> row = new List<int>();
+            for (int j = 0; j < size; j++)
+            {
+                
+                if (i == j)
+                {
+                    row.Add(0);
+                }
+                else
+                {
+                    Random rand = new Random();
+                    int num = rand.Next(0, 2);
+                    row.Add(num);
+                }
+            }
+            numbers.Add(row);
+            Console.WriteLine();
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (numbers[i][j] == 1)
+                {
+                    numbers[j][i] = 1;
+                }
+                Console.Write(numbers[i][j]);
+            }
+            Console.WriteLine();
+        }
+
+        try
+        {
+            string Text = "";
+            for (int i = 0; i < size; i++)
+            {
+                string row = "";
+                for (int j = 0; j < size; j++)
+                {
+                    row += numbers[i][j].ToString();
+                    if(j != size - 1)
+                        row += " ";
+                }
+                if(i != size - 1)
+                    row += "\n";
+                Text += row;
+            }
+
+            GraphInput.Text = Text;
+            Graph g = new Graph(numbers, size);
+            ColorIfCheckboxChecked(g);
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show("Згенерований граф неможливо розфарбувати обраним методом");
         }
     }
 }
