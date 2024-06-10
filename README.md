@@ -1,6 +1,4 @@
-#Курсач YOMAYO)
-
-##This is my coursework on topic Graph coloring.
+>This is my coursework on topic *Graph coloring*
 
 ## Basic information
 This program can visualise a colored graph enetered by user or generate random graph with amount of edges entered by user.
