@@ -7,15 +7,15 @@ using System.Linq;
 public class Graph
 {
     public int Size { get; }
-    readonly List<List<int>> _adjacency;
-    public List<List<int>> Adjacency => _adjacency;
+    readonly List<HashSet<int>> _adjacency;
+    public List<HashSet<int>> Adjacency => _adjacency;
     public Graph(List<List<int>> matrix, int size)
     {
         Size = size;
-        _adjacency = new List<List<int>>(new List<int>[Size]);
+        _adjacency = new List<HashSet<int>>(new HashSet<int>[Size]);
         for (int i = 0; i < Size; i++)
         {
-            _adjacency[i] = new List<int>();
+            _adjacency[i] = new HashSet<int>();
         }
 
         for (int i = 0; i < Size; i++)
@@ -34,10 +34,10 @@ public class Graph
     public Graph(List<Tuple<int, int>> list, int size)
     {
         Size = size;
-        _adjacency = new List<List<int>>(new List<int>[Size]);
+        _adjacency = new List<HashSet<int>>(new HashSet<int>[Size]);
         for (int i = 0; i < Size; i++)
         {
-            _adjacency[i] = new List<int>();
+            _adjacency[i] = new HashSet<int>();
         }
 
         foreach (Tuple<int, int> tuple in list)
