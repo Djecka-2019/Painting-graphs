@@ -217,7 +217,6 @@ public partial class MainWindow
                 }
             }
             numbers.Add(row);
-            Console.WriteLine();
         }
 
         try
